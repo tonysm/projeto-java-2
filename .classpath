@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="asm-3.3.jar"/>
+	<classpathentry kind="lib" path="c3p0-0.9.1.jar"/>
+	<classpathentry kind="lib" path="commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="ehcache-1.2.3.jar"/>
+	<classpathentry kind="lib" path="ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="hibernate3.jar"/>
+	<classpathentry kind="lib" path="hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="hibernate-core.jar"/>
+	<classpathentry kind="lib" path="hibernate-validator-4.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="javassist-3.9.0.GA.jar"/>
+	<classpathentry kind="lib" path="jta-1.1.jar"/>
+	<classpathentry kind="lib" path="log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.10-bin.jar"/>
+	<classpathentry kind="lib" path="postgresql-8.2-511.jdbc2.zip"/>
+	<classpathentry kind="lib" path="slf4j-api-1.5.10.jar"/>
+	<classpathentry kind="lib" path="slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="slf4j-ext-1.5.10.jar"/>
+	<classpathentry kind="lib" path="slf4j-jcl-1.5.10.jar"/>
+	<classpathentry kind="lib" path="slf4j-jdk14-1.5.10.jar"/>
+	<classpathentry kind="lib" path="slf4j-log4j12-1.5.10.jar"/>
+	<classpathentry kind="lib" path="slf4j-log4j12-1.5.8.jar"/>
+	<classpathentry kind="lib" path="slf4j-migrator-1.5.10.jar"/>
+	<classpathentry kind="lib" path="slf4j-nop-1.5.10.jar"/>
+	<classpathentry kind="lib" path="slf4j-simple-1.5.10.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

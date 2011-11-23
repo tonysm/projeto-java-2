@@ -29,7 +29,12 @@
 		<property name="format_sql">true</property>
 		
 		               
-<!--         <mapping class="Teste"/>  -->
+        <mapping class="br.eventos.dominio.Atracao"/>
+        <mapping class="br.eventos.dominio.Banda"/>
+        <mapping class="br.eventos.dominio.Categoria"/>
+        <mapping class="br.eventos.dominio.CategoriaEvento"/>
+        <mapping class="br.eventos.dominio.Evento"/>
+        <mapping class="br.eventos.dominio.LocalDeEvento"/> 
         
 		
     </session-factory>

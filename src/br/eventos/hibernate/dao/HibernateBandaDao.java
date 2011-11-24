@@ -6,7 +6,7 @@ import org.hibernate.Session;
 
 import br.eventos.hibernate.HibernateUtil;
 
-public class HinernateBandaDao implements BandaDao {
+public class HibernateBandaDao implements BandaDao {
 
 	@Override
 	public void inserir(BandaDao bd) {

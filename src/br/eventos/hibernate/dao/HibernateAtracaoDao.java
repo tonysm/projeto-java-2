@@ -4,40 +4,39 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import br.eventos.dominio.Banda;
+import br.eventos.dominio.Atracao;
 import br.eventos.hibernate.HibernateUtil;
 
-public class HibernateBandaDao implements BandaDao {
+public class HibernateAtracaoDao implements AtracaoDao {
 
 	@Override
-	public void inserir(Banda bd) {
+	public void inserir(Atracao atracao) {
 		Session sessao = HibernateUtil.getSessao();
 		sessao.beginTransaction();
-		sessao.save(bd);
+		sessao.save(atracao);
 		sessao.getTransaction().commit();
 	}
 
 	@Override
-	public void alterar(Banda bd) {
+	public void alterar(Atracao atracao) {
 		Session sessao = HibernateUtil.getSessao();
 		sessao.beginTransaction();
-		sessao.update(bd);
+		sessao.update(atracao);
 		sessao.getTransaction().commit();
 	}
 
 	@Override
-	public void excluir(Banda bd) {
+	public void excluir(Atracao atracao) {
 		Session sessao = HibernateUtil.getSessao();
 		sessao.beginTransaction();
-		sessao.delete(bd);
+		sessao.delete(atracao);
 		sessao.getTransaction().commit();
 	}
 
 	@Override
-	public List<Banda> listarTodas() {
-		//não sei fazer HQL ainda
-		
+	public List<Atracao> listar() {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

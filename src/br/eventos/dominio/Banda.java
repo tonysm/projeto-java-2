@@ -23,7 +23,7 @@ public class Banda {
 	@Column(nullable = false)
 	private Date data;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String descricao;
 	
 	@OneToMany(mappedBy = "banda")

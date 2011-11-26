@@ -24,11 +24,15 @@ public class BandaService {
 	}
 	
 	public void salvar(Banda banda){
-		bandaDao.inserir(banda);
+		if(!banda.getNome().isEmpty()){
+			bandaDao.inserir(banda);
+		}
+			
 	}
 	
 	public void editar(Banda banda){
-		bandaDao.alterar(banda);
+		if(!banda.getNome().isEmpty())
+			bandaDao.alterar(banda);
 	}
 	
 	public List<Banda> listarTodas(){

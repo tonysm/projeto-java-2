@@ -6,6 +6,7 @@ import br.eventos.dominio.Banda;
 import br.eventos.hibernate.dao.BandaDao;
 import br.eventos.hibernate.dao.HibernateBandaDao;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 public class BandaService {
 	private static BandaDao bandaDao;
@@ -23,20 +24,20 @@ public class BandaService {
 	public static BandaService getInstance(){
 		return bandaService;
 	}
-	
-	public void salvar(Banda banda){
-		if(!banda.getNome().isEmpty()
-                        && banda.getData() != null){
-			bandaDao.inserir(banda);
-		}
-			
-	}
-	
-	public void editar(Banda banda){
-		if(!banda.getNome().isEmpty()
-                        && banda.getId() != null)
-			bandaDao.alterar(banda);
-	}
+        
+        public void persistir(Banda banda){
+            if(!banda.getNome().isEmpty() || banda.getData() != null){
+                if(banda.getId() != null)
+                    bandaDao.alterar(banda);
+                else
+                    bandaDao.inserir(banda);
+            } else {
+                JOptionPane.showMessageDialog(
+                    null
+                    , "Ooops... Nome e Data de Formação são obrigatórios."
+                );
+            }
+        }
 	
 	public List<Banda> listarTodas(){
 		return bandaDao.listarTodas();

@@ -59,6 +59,7 @@ public class JFPrincipal extends javax.swing.JFrame {
         BTNSalvarBanda = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         TFBandaID = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         JLBandas = new javax.swing.JList();
@@ -121,9 +122,17 @@ public class JFPrincipal extends javax.swing.JFrame {
 
         jLabel4.setText("#");
 
+        TFBandaID.setEditable(false);
         TFBandaID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TFBandaIDActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Limpar (sem salvar)");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -134,7 +143,10 @@ public class JFPrincipal extends javax.swing.JFrame {
             .addGroup(JPNovaBandaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BTNSalvarBanda, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPNovaBandaLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BTNSalvarBanda))
                     .addGroup(JPNovaBandaLayout.createSequentialGroup()
                         .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -168,7 +180,9 @@ public class JFPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(BTNSalvarBanda))
+                .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTNSalvarBanda)
+                    .addComponent(jButton1)))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Bandas"));
@@ -429,18 +443,17 @@ private void BTNSalvarBandaActionPerformed(java.awt.event.ActionEvent evt) {//GE
     try{
         Date dataformatada = format.parse(dataDoCampo);
         banda.setData(dataformatada);
-        if (banda.getId() != null){
-            servico.salvar(banda);
-        }else{
-            servico.editar(banda);
-        }
+        servico.persistir(banda);
         TFBandaID.setText("");
         TFBandaNome.setText("");
         TABandaDescricao.setText("");
         TFDataFormacao.setText("");
         JLBandas.setListData(servico.listarTodas().toArray());
     } catch(Exception e){
-        System.out.println(e.getMessage());
+        JOptionPane.showMessageDialog(
+            null
+            , "Ooops... informe uma data válida dd/mm/yyyy."
+        );
     }
     
     
@@ -477,10 +490,18 @@ private void TFCadLocalIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
 
 private void JBBandaEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBandaEditarActionPerformed
     Banda bandaSelecionada = (Banda)JLBandas.getSelectedValue();
-    TFBandaID.setText(Long.toString(bandaSelecionada.getId()));
-    TFBandaNome.setText(bandaSelecionada.getNome());
-    SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
-    TFDataFormacao.setText(dataFormatada.format(bandaSelecionada.getData()));
+    if(bandaSelecionada != null){
+        TFBandaID.setText(Long.toString(bandaSelecionada.getId()));
+        TFBandaNome.setText(bandaSelecionada.getNome());
+        SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
+        TFDataFormacao.setText(dataFormatada.format(bandaSelecionada.getData()));
+        TABandaDescricao.setText(bandaSelecionada.getDescricao());
+    } else {
+        JOptionPane.showMessageDialog(
+            null
+            , "Ooops... você esqueceu de selecionar uma banda."
+        );
+    }
 }//GEN-LAST:event_JBBandaEditarActionPerformed
 
 private void TFBandaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFBandaNomeActionPerformed
@@ -488,21 +509,40 @@ private void TFBandaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-F
 }//GEN-LAST:event_TFBandaNomeActionPerformed
 
 private void JBBandaExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBandaExcluirActionPerformed
-    
     Banda banda = (Banda)JLBandas.getSelectedValue();
-    int result = JOptionPane.showConfirmDialog(
+    if(banda != null){
+        int result = JOptionPane.showConfirmDialog(
             null
             , "Tem certeza que deseja excluir a banda " + banda.getNome() + "?"
             , "Atenção!"
             , JOptionPane.YES_NO_OPTION
-    );
-    if(result == 0){
-        BandaService servico = BandaService.getInstance();
-        servico.excluir(banda);
-        
-        JLBandas.setListData(servico.listarTodas().toArray());
+        );
+        if(result == 0){
+            BandaService servico = BandaService.getInstance();
+            servico.excluir(banda);
+            if(banda.getId().equals(Long.parseLong(TFBandaID.getText()))){
+                //limpa tudo
+                TFBandaID.setText("");
+                TFBandaNome.setText("");
+                TABandaDescricao.setText("");
+                TFDataFormacao.setText("");
+            } 
+            JLBandas.setListData(servico.listarTodas().toArray());
+        }
+    } else {
+        JOptionPane.showMessageDialog(
+            null
+            , "Ooops... você esqueceu de selecionar uma banda."
+        );
     }
 }//GEN-LAST:event_JBBandaExcluirActionPerformed
+
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    TFBandaID.setText("");
+    TFBandaNome.setText("");
+    TFDataFormacao.setText("");
+    TABandaDescricao.setText("");
+}//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -555,6 +595,7 @@ private void JBBandaExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private javax.swing.JTextField TFCadLocalId;
     private javax.swing.JTextField TFCadLocalNome;
     private javax.swing.JTextField TFDataFormacao;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

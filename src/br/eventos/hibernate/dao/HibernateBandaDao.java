@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import br.eventos.dominio.Banda;
 import br.eventos.hibernate.HibernateUtil;
+import org.hibernate.Query;
 
 public class HibernateBandaDao implements BandaDao {
 
@@ -35,9 +36,25 @@ public class HibernateBandaDao implements BandaDao {
 
 	@Override
 	public List<Banda> listarTodas() {
-		//não sei fazer HQL ainda
-		
-		return null;
+                Session sessao = HibernateUtil.getSessao();
+                sessao.beginTransaction();
+                Query query = sessao.createQuery("from Banda");
+                List<Banda> o = query.list();
+                return o;
 	}
+        
+        public Banda carregar(Long id){
+            
+            String hql = "from Banda where id = :id";
+            
+            Session sessao = HibernateUtil.getSessao();
+            sessao.beginTransaction();
+            Query query = sessao.createQuery(hql);
+            query.setParameter("id", id);
+            
+            Banda banda = (Banda)query.uniqueResult();
+            
+            return banda;
+        }
 	
 }

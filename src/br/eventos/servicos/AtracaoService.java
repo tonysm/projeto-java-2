@@ -18,7 +18,7 @@ public class AtracaoService {
 		atracaoDao = new HibernateAtracaoDao();
 	}
 	
-	public AtracaoService getInstance(){
+	public static AtracaoService getInstance(){
 		return singleton;
 	}
 	

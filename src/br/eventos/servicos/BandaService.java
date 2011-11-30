@@ -5,9 +5,10 @@ import java.util.List;
 import br.eventos.dominio.Banda;
 import br.eventos.hibernate.dao.BandaDao;
 import br.eventos.hibernate.dao.HibernateBandaDao;
+import java.text.SimpleDateFormat;
 
 public class BandaService {
-	private BandaDao bandaDao;
+	private static BandaDao bandaDao;
 	private static BandaService bandaService;
 	
 	static {
@@ -24,14 +25,16 @@ public class BandaService {
 	}
 	
 	public void salvar(Banda banda){
-		if(!banda.getNome().isEmpty()){
+		if(!banda.getNome().isEmpty()
+                        && banda.getData() != null){
 			bandaDao.inserir(banda);
 		}
 			
 	}
 	
 	public void editar(Banda banda){
-		if(!banda.getNome().isEmpty())
+		if(!banda.getNome().isEmpty()
+                        && banda.getId() != null)
 			bandaDao.alterar(banda);
 	}
 	
@@ -42,5 +45,9 @@ public class BandaService {
 	public void excluir(Banda banda){
 		bandaDao.excluir(banda);
 	}
+        
+        public Banda carregar(Long id){
+            return bandaDao.carregar(id);
+        }
 	
 }

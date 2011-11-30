@@ -18,7 +18,7 @@ public class EventoService {
 		eventoDao = new HibernateEventoDao();
 	}
 	
-	public EventoService getInstance(){
+	public static EventoService getInstance(){
 		return singleton;
 	}
 	

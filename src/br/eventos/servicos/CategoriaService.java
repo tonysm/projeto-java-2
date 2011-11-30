@@ -18,7 +18,7 @@ public class CategoriaService {
 		categoriaDao = new HibernateCategoriaDao();
 	}
 	
-	public CategoriaService getInstance(){
+	public static CategoriaService getInstance(){
 		return singleton;
 	}
 	

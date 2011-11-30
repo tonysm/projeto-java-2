@@ -9,4 +9,5 @@ public interface BandaDao {
 	public void alterar(Banda bd);
 	public void excluir(Banda db);
 	public List<Banda> listarTodas();
+        public Banda carregar(Long id);
 }

@@ -18,7 +18,7 @@ public class CategoriaEventoService {
 		categoriaEventoDao = new HibernateCategoriaEventoDao();
 	}
 	
-	public CategoriaEventoService getInstance(){
+	public static CategoriaEventoService getInstance(){
 		return singleton;
 	}
 	

@@ -18,7 +18,7 @@ public class LocalDeEventoService {
 		localDeEventoDao = new HibernateLocalDeEventoDao();
 	}
 	
-	public LocalDeEventoService getInstance(){
+	public static LocalDeEventoService getInstance(){
 		return singleton;
 	}
 	

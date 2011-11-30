@@ -16,7 +16,9 @@ import br.eventos.hibernate.HibernateUtil;
 import br.eventos.servicos.BandaService;
 import br.eventos.servicos.LocalDeEventoService;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.Session;
 
@@ -519,14 +521,15 @@ private void JBBandaExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GE
         );
         if(result == 0){
             BandaService servico = BandaService.getInstance();
-            servico.excluir(banda);
-            if(banda.getId().equals(Long.parseLong(TFBandaID.getText()))){
+            String id = (TFBandaID.getText().isEmpty()) ? "0" : TFBandaID.getText();
+            if(banda.getId() == Long.parseLong(id)){
                 //limpa tudo
                 TFBandaID.setText("");
                 TFBandaNome.setText("");
                 TABandaDescricao.setText("");
                 TFDataFormacao.setText("");
-            } 
+            }
+            servico.excluir(banda);
             JLBandas.setListData(servico.listarTodas().toArray());
         }
     } else {

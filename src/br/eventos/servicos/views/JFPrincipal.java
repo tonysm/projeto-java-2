@@ -11,9 +11,11 @@
 package br.eventos.servicos.views;
 
 import br.eventos.dominio.Banda;
+import br.eventos.dominio.Evento;
 import br.eventos.dominio.LocalDeEvento;
 import br.eventos.hibernate.HibernateUtil;
 import br.eventos.servicos.BandaService;
+import br.eventos.servicos.EventoService;
 import br.eventos.servicos.LocalDeEventoService;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +37,14 @@ public class JFPrincipal extends javax.swing.JFrame {
         initComponents();
         
         JLBandas.setListData(BandaService.getInstance().listarTodas().toArray());
+        JLCadLocal.setListData(LocalDeEventoService.getInstance().listarTodas().toArray());
+        List<LocalDeEvento> listaLocaisEventos = LocalDeEventoService.getInstance().listarTodas();
+        JCBEventoLocal.addItem(null);
+        for(LocalDeEvento u: listaLocaisEventos){
+            JCBEventoLocal.addItem(u);
+        }
+        JCBEventoLocal.setSelectedIndex(0);
+        JLCadEventos.setListData(EventoService.getInstance().listarTodos().toArray());
     }
 
     /** This method is called from within the constructor to
@@ -69,6 +79,24 @@ public class JFPrincipal extends javax.swing.JFrame {
         JBBandaExcluir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        TFCadEventoNome = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        TFCadEventoId = new javax.swing.JTextField();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        TACadEventoDescricao = new javax.swing.JTextArea();
+        TFCadEventoData = new javax.swing.JTextField();
+        JLCadEventoSalvar = new javax.swing.JButton();
+        JBCadEventoLimpar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        JCBEventoLocal = new javax.swing.JComboBox();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        JLCadEventos = new javax.swing.JList();
+        JBCadEventosEditar = new javax.swing.JButton();
+        JBCadEventosExcluir = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -79,12 +107,13 @@ public class JFPrincipal extends javax.swing.JFrame {
         TFCadLocalEndereco = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         TFCadLocalCapacidade = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        JBCadLocalSalvar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        JLCadLocal = new javax.swing.JList();
+        JBCadLocalEditar = new javax.swing.JButton();
+        JBCadLocalExcluir = new javax.swing.JButton();
 
         jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -145,22 +174,20 @@ public class JFPrincipal extends javax.swing.JFrame {
             .addGroup(JPNovaBandaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPNovaBandaLayout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTNSalvarBanda))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JPNovaBandaLayout.createSequentialGroup()
-                        .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                            .addComponent(TFDataFormacao, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                            .addComponent(TFBandaNome, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                            .addComponent(TFBandaID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))))
+                        .addComponent(BTNSalvarBanda)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                    .addComponent(TFDataFormacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                    .addComponent(TFBandaNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                    .addComponent(TFBandaID, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
                 .addContainerGap())
         );
         JPNovaBandaLayout.setVerticalGroup(
@@ -181,10 +208,11 @@ public class JFPrincipal extends javax.swing.JFrame {
                 .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTNSalvarBanda)
-                    .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(JPNovaBandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(BTNSalvarBanda))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Bandas"));
@@ -228,7 +256,7 @@ public class JFPrincipal extends javax.swing.JFrame {
                         .addComponent(JBBandaEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JBBandaExcluir))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -236,8 +264,8 @@ public class JFPrincipal extends javax.swing.JFrame {
         JPBandas.setLayout(JPBandasLayout);
         JPBandasLayout.setHorizontalGroup(
             JPBandasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JPNovaBanda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(JPNovaBanda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         JPBandasLayout.setVerticalGroup(
             JPBandasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,15 +280,142 @@ public class JFPrincipal extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro"));
 
+        jLabel9.setText("Nome");
+
+        jLabel10.setText("Descrição");
+
+        jLabel11.setText("Data do Evento");
+
+        jLabel12.setText("#");
+
+        TFCadEventoId.setEditable(false);
+
+        TACadEventoDescricao.setColumns(20);
+        TACadEventoDescricao.setRows(5);
+        jScrollPane5.setViewportView(TACadEventoDescricao);
+
+        JLCadEventoSalvar.setText("Salvar");
+        JLCadEventoSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JLCadEventoSalvarActionPerformed(evt);
+            }
+        });
+
+        JBCadEventoLimpar.setText("Limpar (sem salvar)");
+        JBCadEventoLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCadEventoLimparActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("Local de Evento");
+
+        JCBEventoLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCBEventoLocalActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel10))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(JLCadEventoSalvar)
+                                .addGap(18, 18, 18)
+                                .addComponent(JBCadEventoLimpar))
+                            .addComponent(TFCadEventoId, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TFCadEventoNome, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(JCBEventoLocal, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TFCadEventoData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel13))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 124, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12)
+                    .addComponent(TFCadEventoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(TFCadEventoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(TFCadEventoData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(JCBEventoLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLCadEventoSalvar)
+                    .addComponent(JBCadEventoLimpar))
+                .addGap(26, 26, 26))
+        );
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Eventos Cadastrados"));
+
+        JLCadEventos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane6.setViewportView(JLCadEventos);
+
+        JBCadEventosEditar.setText("Editar");
+        JBCadEventosEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCadEventosEditarActionPerformed(evt);
+            }
+        });
+
+        JBCadEventosExcluir.setText("Excluir");
+        JBCadEventosExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCadEventosExcluirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(JBCadEventosEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JBCadEventosExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(JBCadEventosEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JBCadEventosExcluir)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -268,12 +423,15 @@ public class JFPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
 
         JTPPrincipal.addTab("Eventos", jPanel1);
@@ -301,10 +459,17 @@ public class JFPrincipal extends javax.swing.JFrame {
 
         jLabel8.setText("Capacidade");
 
-        jButton3.setText("Salvar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        JBCadLocalSalvar.setText("Salvar");
+        JBCadLocalSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                JBCadLocalSalvarActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Limpar (sem salvar)");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -329,7 +494,10 @@ public class JFPrincipal extends javax.swing.JFrame {
                                 .addComponent(jLabel5)))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(JBCadLocalSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(TFCadLocalId, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE))
@@ -357,17 +525,30 @@ public class JFPrincipal extends javax.swing.JFrame {
                     .addComponent(TFCadLocalCapacidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JBCadLocalSalvar)
+                    .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Locais de evento"));
 
-        jScrollPane4.setViewportView(jList2);
+        JLCadLocal.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(JLCadLocal);
 
-        jButton4.setText("Editar");
+        JBCadLocalEditar.setText("Editar");
+        JBCadLocalEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCadLocalEditarActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Excluir");
+        JBCadLocalExcluir.setText("Excluir");
+        JBCadLocalExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBCadLocalExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -378,8 +559,8 @@ public class JFPrincipal extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBCadLocalExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBCadLocalEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -388,10 +569,10 @@ public class JFPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jButton4)
+                        .addComponent(JBCadLocalEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+                        .addComponent(JBCadLocalExcluir))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -416,11 +597,11 @@ public class JFPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JTPPrincipal)
+            .addComponent(JTPPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JTPPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+            .addComponent(JTPPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
         );
 
         pack();
@@ -461,26 +642,35 @@ private void BTNSalvarBandaActionPerformed(java.awt.event.ActionEvent evt) {//GE
     
 }//GEN-LAST:event_BTNSalvarBandaActionPerformed
 
-private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    LocalDeEvento localEvento = new LocalDeEvento();
+private void JBCadLocalSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadLocalSalvarActionPerformed
+    LocalDeEvento localEvento;
     LocalDeEventoService servico = LocalDeEventoService.getInstance();
-    
-    localEvento.setNome(TFCadLocalNome.getText());
-    localEvento.setEndereco(TFCadLocalEndereco.getText());
-    localEvento.setCapacidadeMaxima(Integer.parseInt(TFCadLocalCapacidade.getText()));
-    if (TFCadLocalId.getText().isEmpty()){
-        servico.inserir(localEvento);   
-    }else{
-        localEvento.setId(Long.parseLong(TFCadLocalId.getText()));
-        servico.alterar(localEvento);
+    if(TFCadLocalId.getText().isEmpty()){
+        localEvento = new LocalDeEvento();
+    } else {
+        localEvento = servico.carregar(Long.parseLong(TFCadLocalId.getText()));
     }
-        TFCadLocalNome.setText("");
-        TFCadLocalEndereco.setText("");
-        TFCadLocalCapacidade.setText("");
-        TFCadLocalId.setText("");
-        jList2.setListData(servico.listarTodas().toArray());
-  
-}//GEN-LAST:event_jButton3ActionPerformed
+    
+    localEvento.setCapacidadeMaxima(Integer.parseInt(TFCadLocalCapacidade.getText()));
+    localEvento.setEndereco(TFCadLocalEndereco.getText());
+    localEvento.setNome(TFCadLocalNome.getText());
+    
+    servico.persistir(localEvento);
+    
+    TFCadLocalCapacidade.setText("");
+    TFCadLocalEndereco.setText("");
+    TFCadLocalId.setText("");
+    TFCadLocalNome.setText("");
+    
+    JLCadLocal.setListData(servico.listarTodas().toArray());
+    JCBEventoLocal.removeAllItems();
+    List<LocalDeEvento> listaLocaisEventos = LocalDeEventoService.getInstance().listarTodas();
+    JCBEventoLocal.addItem(null);
+    for(LocalDeEvento u: listaLocaisEventos){
+        JCBEventoLocal.addItem(u);
+    }
+    JCBEventoLocal.setSelectedIndex(0);
+}//GEN-LAST:event_JBCadLocalSalvarActionPerformed
 
 private void TFCadLocalNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFCadLocalNomeActionPerformed
 // TODO add your handling code here:
@@ -547,6 +737,145 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     TABandaDescricao.setText("");
 }//GEN-LAST:event_jButton1ActionPerformed
 
+private void JBCadLocalExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadLocalExcluirActionPerformed
+    LocalDeEvento local = (LocalDeEvento)JLCadLocal.getSelectedValue();
+    if(local != null){
+        int result = JOptionPane.showConfirmDialog(null
+            , "Tem certeza que deseja excluir este local?"
+            , "Confirmação de exclusão"
+            , JOptionPane.YES_NO_OPTION
+        );
+        
+        if(result == 0){
+            if(local.getEventos() == null){
+                if(TFCadLocalId.getText().equals(Long.toString(local.getId()))){
+                    TFCadLocalCapacidade.setText("");
+                    TFCadLocalEndereco.setText("");
+                    TFCadLocalId.setText("");
+                    TFCadLocalNome.setText("");
+                }
+
+                LocalDeEventoService servico = LocalDeEventoService.getInstance();
+                servico.excluir(local);
+                JLCadLocal.setListData(servico.listarTodas().toArray());
+                List<LocalDeEvento> locais = LocalDeEventoService.getInstance().listarTodas();
+                JCBEventoLocal.removeAllItems();
+                JCBEventoLocal.addItem(null);
+                for(LocalDeEvento u : locais){
+                    JCBEventoLocal.addItem(u);
+                }
+                JCBEventoLocal.setSelectedIndex(0);
+            } else {
+                JOptionPane.showMessageDialog(null, "Há eventos cadastrados com esse local. Impossível excluí-lo.");
+            }
+        }
+    } else {
+        JOptionPane.showMessageDialog(null,"Oops... você esqueceu de selecionar um local.");
+    }
+}//GEN-LAST:event_JBCadLocalExcluirActionPerformed
+
+private void JBCadLocalEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadLocalEditarActionPerformed
+    LocalDeEvento local = (LocalDeEvento)JLCadLocal.getSelectedValue();
+    if(local != null){
+        
+        TFCadLocalCapacidade.setText(Integer.toString(local.getCapacidadeMaxima()));
+        TFCadLocalEndereco.setText(local.getEndereco());
+        TFCadLocalId.setText(Long.toString(local.getId()));
+        TFCadLocalNome.setText(local.getNome());
+        
+    } else {
+        JOptionPane.showMessageDialog(
+            null
+            , "Oops... você esqueceu de selecionar um local de evento."
+        );
+    }
+}//GEN-LAST:event_JBCadLocalEditarActionPerformed
+
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    TFCadLocalCapacidade.setText("");
+    TFCadLocalEndereco.setText("");
+    TFCadLocalId.setText("");
+    TFCadLocalNome.setText("");
+}//GEN-LAST:event_jButton2ActionPerformed
+
+private void JLCadEventoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JLCadEventoSalvarActionPerformed
+    Evento evento;
+    EventoService servico = EventoService.getInstance();
+    if(TFCadEventoId.getText().isEmpty()){
+        evento = new Evento();
+    } else {
+        evento = servico.carregar(Long.parseLong(TFCadEventoId.getText()));
+    }
+    
+    evento.setDescricao(TACadEventoDescricao.getText());
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    try {
+        evento.setData(format.parse(TFCadEventoData.getText()));
+        evento.setNome(TFCadEventoNome.getText());
+        
+        LocalDeEvento local = (LocalDeEvento)JCBEventoLocal.getSelectedItem();
+        if(local != null){
+            evento.setLocal(local);
+        }
+        
+        servico.persistir(evento);
+        
+        TFCadEventoNome.setText("");
+        TFCadEventoId.setText("");
+        TACadEventoDescricao.setText("");
+        TFCadEventoData.setText("");
+        JLCadEventos.setListData(servico.listarTodos().toArray());
+        JCBEventoLocal.setSelectedIndex(0);
+    }catch(Exception e){
+        JOptionPane.showMessageDialog(null, "Oops... insira uma data válida dd/mm/yyyy");
+    }
+}//GEN-LAST:event_JLCadEventoSalvarActionPerformed
+
+private void JBCadEventoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadEventoLimparActionPerformed
+    TFCadEventoData.setText("");
+    TFCadEventoId.setText("");
+    TFCadEventoNome.setText("");
+    TACadEventoDescricao.setText("");
+    JCBEventoLocal.setSelectedIndex(0);
+}//GEN-LAST:event_JBCadEventoLimparActionPerformed
+
+private void JBCadEventosEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadEventosEditarActionPerformed
+    Evento evento = (Evento)JLCadEventos.getSelectedValue();
+    if(evento != null){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        TFCadEventoData.setText(format.format(evento.getData()));
+        TFCadEventoId.setText(Long.toString(evento.getId()));
+        TFCadEventoNome.setText(evento.getNome());
+        TACadEventoDescricao.setText(evento.getDescricao());
+        JCBEventoLocal.setSelectedItem(evento.getLocal());
+    } else {
+        JOptionPane.showMessageDialog(null, "Oops... você esqueceu de selecionar um evento");
+    }
+}//GEN-LAST:event_JBCadEventosEditarActionPerformed
+
+private void JBCadEventosExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCadEventosExcluirActionPerformed
+    Evento eventoSelecionado = (Evento)JLCadEventos.getSelectedValue();
+    if (eventoSelecionado == null){
+        JOptionPane.showMessageDialog(null, "Ooops... você esqueceu de selecionar um evento");
+    }else{
+        if (TFCadEventoId.getText().equals(Long.toString(eventoSelecionado.getId()))){
+            TFCadEventoData.setText("");
+            TFCadEventoId.setText("");
+            TFCadEventoNome.setText("");
+            TACadEventoDescricao.setText("");
+            JCBEventoLocal.setSelectedIndex(0);
+        }
+        EventoService service = EventoService.getInstance();
+        service.excluir(eventoSelecionado);
+        
+        JLCadEventos.setListData(service.listarTodos().toArray());
+    }
+}//GEN-LAST:event_JBCadEventosExcluirActionPerformed
+
+private void JCBEventoLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCBEventoLocalActionPerformed
+// TODO add your handling code here:
+}//GEN-LAST:event_JCBEventoLocalActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -586,23 +915,39 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JButton BTNSalvarBanda;
     private javax.swing.JButton JBBandaEditar;
     private javax.swing.JButton JBBandaExcluir;
+    private javax.swing.JButton JBCadEventoLimpar;
+    private javax.swing.JButton JBCadEventosEditar;
+    private javax.swing.JButton JBCadEventosExcluir;
+    private javax.swing.JButton JBCadLocalEditar;
+    private javax.swing.JButton JBCadLocalExcluir;
+    private javax.swing.JButton JBCadLocalSalvar;
+    private javax.swing.JComboBox JCBEventoLocal;
     private javax.swing.JList JLBandas;
+    private javax.swing.JButton JLCadEventoSalvar;
+    private javax.swing.JList JLCadEventos;
+    private javax.swing.JList JLCadLocal;
     private javax.swing.JPanel JPBandas;
     private javax.swing.JPanel JPNovaBanda;
     private javax.swing.JTabbedPane JTPPrincipal;
     private javax.swing.JTextArea TABandaDescricao;
+    private javax.swing.JTextArea TACadEventoDescricao;
     private javax.swing.JTextField TFBandaID;
     private javax.swing.JTextField TFBandaNome;
+    private javax.swing.JTextField TFCadEventoData;
+    private javax.swing.JTextField TFCadEventoId;
+    private javax.swing.JTextField TFCadEventoNome;
     private javax.swing.JTextField TFCadLocalCapacidade;
     private javax.swing.JTextField TFCadLocalEndereco;
     private javax.swing.JTextField TFCadLocalId;
     private javax.swing.JTextField TFCadLocalNome;
     private javax.swing.JTextField TFDataFormacao;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -610,17 +955,20 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     // End of variables declaration//GEN-END:variables
 }

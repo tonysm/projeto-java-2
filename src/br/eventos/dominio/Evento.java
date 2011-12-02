@@ -92,5 +92,10 @@ public class Evento {
 	public void setCategoriaEvento(List<CategoriaEvento> categoriaEvento) {
 		this.categoriaEvento = categoriaEvento;
 	} 
+        
+        @Override
+        public String toString(){
+            return this.nome;
+        }
 	
 }

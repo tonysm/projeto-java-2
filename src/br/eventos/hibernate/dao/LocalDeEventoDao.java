@@ -9,4 +9,5 @@ public interface LocalDeEventoDao {
 	public void alterar(LocalDeEvento local);
 	public void excluir(LocalDeEvento local);
 	public List<LocalDeEvento> listar();
+        public LocalDeEvento carregar(Long id);
 }

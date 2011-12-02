@@ -9,4 +9,5 @@ public interface EventoDao {
 	public void alterar(Evento evento);
 	public void excluir(Evento evento);
 	public List<Evento> listarTodos();
+        public Evento carregar(Long id);
 }

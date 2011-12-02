@@ -37,7 +37,6 @@ public class HibernateBandaDao implements BandaDao {
 	@Override
 	public List<Banda> listarTodas() {
                 Session sessao = HibernateUtil.getSessao();
-                sessao.beginTransaction();
                 Query query = sessao.createQuery("from Banda");
                 List<Banda> o = query.list();
                 return o;
@@ -53,7 +52,7 @@ public class HibernateBandaDao implements BandaDao {
             query.setParameter("id", id);
             
             Banda banda = (Banda)query.uniqueResult();
-            
+            sessao.getTransaction().commit();
             return banda;
         }
 	

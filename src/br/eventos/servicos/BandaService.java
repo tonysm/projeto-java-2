@@ -31,12 +31,7 @@ public class BandaService {
                     bandaDao.alterar(banda);
                 else
                     bandaDao.inserir(banda);
-            } else {
-                JOptionPane.showMessageDialog(
-                    null
-                    , "Ooops... Nome e Data de Formação são obrigatórios."
-                );
-            }
+            } 
         }
 	
 	public List<Banda> listarTodas(){

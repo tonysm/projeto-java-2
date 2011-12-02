@@ -67,5 +67,9 @@ public class LocalDeEvento {
 		this.capacidadeMaxima = capacidadeMaxima;
 	}
 	
+        @Override
+        public String toString(){
+            return this.nome;
+        }
 	
 }
